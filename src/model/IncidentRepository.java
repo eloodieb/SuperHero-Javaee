@@ -23,7 +23,7 @@ public class IncidentRepository {
 			prepare.setString(1, incident.getCity());
 			prepare.setDouble(2, incident.getLongitude());
 			prepare.setDouble(3, incident.getLatitude());
-			prepare.setLong(4, incident.getId_type_incident());
+			prepare.setInt(4, incident.getId_type_incident());
 			prepare.executeUpdate();
 			prepare.close();
 		} catch (SQLException e) {

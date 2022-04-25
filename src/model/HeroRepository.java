@@ -5,33 +5,43 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Stack;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 import com.mysql.jdbc.Statement;
 
+import controler.GPSCoordinates;
 import entity.Hero;
 
 
 
 public class HeroRepository {
 	private Connection connection;
+	private GPSCoordinates gps;
 	private IncidentHeroReportRepository incidentHeroReportRepository;
 	
 	public HeroRepository() {
 		connection = Connexion.getInstance();
+		incidentHeroReportRepository = new IncidentHeroReportRepository();
+		gps = new GPSCoordinates();
 	}
 	
 	public int create(Hero hero) {
 		int id=0;
 		try {
 			PreparedStatement prepare = this.connection.prepareStatement(
-                      	"INSERT INTO hero (name, mobile, longitude, latitude) "+
-                      	"VALUES (?, ?, ?, ?)" ,
+                      	"INSERT INTO hero (name, mobile, adress, longitude, latitude) "+
+                      	"VALUES (?, ?, ?, ?, ?)" ,
             Statement.RETURN_GENERATED_KEYS
                       );
 			prepare.setString(1, hero.getName());
 			prepare.setString(2, hero.getMobile());
-			prepare.setDouble(3, hero.getLongitude());
-			prepare.setDouble(4, hero.getLatitude());
+			prepare.setString(3, hero.getAdress());
+			prepare.setDouble(4, hero.getLongitude());
+			prepare.setDouble(5, hero.getLatitude());
+			
 			prepare.executeUpdate();
 		
 			ResultSet rs=prepare.getGeneratedKeys();
@@ -56,6 +66,7 @@ public class HeroRepository {
 				hero.setId(result.getLong("id"));
 				hero.setName(result.getString("name"));
 				hero.setMobile(result.getString("mobile"));
+				hero.setAdress(result.getString("adress"));
 				hero.setLongitude(result.getDouble("longitude"));
 				hero.setLatitude(result.getDouble("latitude"));
 				heros.add(hero);
@@ -66,7 +77,7 @@ public class HeroRepository {
 		return heros;
 	}
 	
-	public ArrayList<Hero> findHerosDispo(double latitude, double longitude, int idIncident) {
+	public ArrayList<Hero> findHerosDispo(double latitude, double longitude, String idIncident) {
 		ArrayList<Hero> heros = new ArrayList<>(); 
 		Hero hero;
 		ResultSet result;
@@ -75,11 +86,18 @@ public class HeroRepository {
 			while (result.next()) {
 				hero = new Hero();
 				hero.setId(result.getLong("id"));
+				Stack<String> idsArray = incidentHeroReportRepository.findByHero((int) result.getLong("id"));
 				hero.setName(result.getString("name"));
 				hero.setMobile(result.getString("mobile"));
+				hero.setAdress(result.getString("adress"));
 				hero.setLongitude(result.getDouble("longitude"));
 				hero.setLatitude(result.getDouble("latitude"));
-				heros.add(hero);
+				double distance = gps.calculateDistance(new BigDecimal(hero.getLatitude(), MathContext.DECIMAL64), new BigDecimal(hero.getLongitude(), MathContext.DECIMAL64), new BigDecimal(latitude, MathContext.DECIMAL64), new BigDecimal(longitude, MathContext.DECIMAL64) );
+				
+				if(distance < 50000 && idsArray.contains(idIncident)) {
+					heros.add(hero);
+				}
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -62,9 +62,12 @@ public class heroinscription extends HttpServlet {
 		if(request.getParameter("add_hero") != null){
 			String name = request.getParameter("name");
 			String mobile = request.getParameter("mobile");  
+			String adress = request.getParameter("adress");
 			String longitude = request.getParameter("longitude");  
 			String latitude = request.getParameter("latitude");  
-			Hero hero = new Hero(name, mobile, Double.parseDouble(longitude), Double.parseDouble(latitude));
+		 
+			GPSCoordinates gpsHero = GPSCoordinates.getGpsCoordinatesByAddress(adress);
+			Hero hero = new Hero(name, mobile, adress, Double.parseDouble(longitude), Double.parseDouble(latitude));
 		    int idHero = heroRepository.create(hero);
 		    
 		
@@ -74,14 +77,9 @@ public class heroinscription extends HttpServlet {
 		     
 		    	if(id_incident != null) {
 					
-		    		//ArrayList<IncidentHeroReport> arr = new ArrayList<IncidentHeroReport>(); 
-					
-					//if(arr.size() <= 3) {
 						IncidentHeroReport incidentreport = new IncidentHeroReport(Integer.parseInt(id_incident), idHero);
 						incidentHeroReportRepository.create(incidentreport);
-						//arr.add(incidentreport);
-						
-				   // } 
+			
 					
 				}
 				

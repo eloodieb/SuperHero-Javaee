@@ -7,13 +7,15 @@ public class Hero {
 	private Long id;
 	private String name;
 	private String mobile;
+	private String adress;
 	private Double longitude;
 	private Double latitude;
 	private List<IncidentHeroReport> incidents;
 	public Hero() {}
-	public Hero(String name, String mobile, Double longitude, Double latitude) {
+	public Hero(String name, String mobile,  String adress, Double longitude, Double latitude) {
 		this.name = name;
 		this.mobile = mobile;
+		this.adress= adress;
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
@@ -36,6 +38,14 @@ public class Hero {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+	
+	public String getAdress() {
+		return adress;
+	}
+	public void setAdress(String adress) {
+		this.adress = adress;
+	}
+	
 	public Double getLongitude() {
 		return longitude;
 	}

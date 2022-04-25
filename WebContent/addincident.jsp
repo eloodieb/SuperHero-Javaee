@@ -12,14 +12,7 @@
 		    <label for="city" class="form-label">Nom de la ville</label>
 		    <input type="text" class="form-control" name="city">
 		  </div>
-		  <div class="mb-3">
-		    <label for="latitude" class="form-label">Latitude</label>
-		    <input type="text" class="form-control" name="latitude">
-		  </div>
-		    <div class="mb-3">
-		    <label for="longitude" class="form-label">Longitude</label>
-		    <input type="text" class="form-control" name="longitude">
-		  </div>
+		  
 		   <div class="mb-3">
 		      <label for="incident" class="form-label">Type d'incident</label>
 		      <select name="incident">

@@ -1,6 +1,7 @@
 package controler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import model.TypeIncidentRepository;
 /**
  * Servlet implementation class ServletAddIncidentForm
  */
+
 @WebServlet("/addIncident")
 public class ServletAddIncidentForm extends HttpServlet {
 	private TypeIncidentRepository typeIncidentRepository;
@@ -60,19 +62,25 @@ public class ServletAddIncidentForm extends HttpServlet {
 		
 		if(request.getParameter("submit_add_incident") != null){
 			String city = request.getParameter("city");
-			String longitude = request.getParameter("longitude");  
-			String latitude = request.getParameter("latitude");  
+			GPSCoordinates gpsVille = GPSCoordinates.getGpsCoordinatesByAddress(city);
+			double latitude = gpsVille.getLatitude().doubleValue(); 
+			double longitude =  gpsVille.getLongitude().doubleValue();
 			String id_type_incident = request.getParameter("incident");  
-			Long id_incident = Long.parseLong(id_type_incident);
-			Incident incident = new Incident(city, Double.parseDouble(longitude), Double.parseDouble(latitude), id_incident);
+			int id_incident = Integer.parseInt(id_type_incident);
+			Incident incident = new Incident(city, longitude, latitude, id_incident);
 			incidentRepository.create(incident);
 			
 			
-			List<Hero> heros = heroRepository.findAll();
+			
+			
+			ArrayList<Hero> heros = heroRepository.findHerosDispo(latitude, longitude, id_type_incident);
 			request.setAttribute("heros", heros);
-			request.getRequestDispatcher(urlVue).forward(request, response); 
+			urlVue = "resultlisthero.jsp";
+			System.out.println(heros);
 		}
 		
+		request.getRequestDispatcher(urlVue).forward(request, response); 
+	
 	}
 	
 

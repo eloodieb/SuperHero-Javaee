@@ -14,8 +14,6 @@
 			    <tr>
 			      <th scope="col">Nom</th>
 			      <th scope="col">Téléphone</th>
-			      <th scope="col">Longitude</th>
-			      <th scope="col">Latitude</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -23,8 +21,6 @@
 			    <tr>
 			      <td>${hero.name}</td>
 			      <td>${hero.mobile}</td>
-			      <td>${hero.longitude}</td>
-			      <td>${hero.latitude}</td>
 			    </tr>
 			    </c:forEach> 
 			  </tbody>

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import entity.Hero;
 import entity.IncidentHeroReport;
@@ -52,4 +53,22 @@ public class IncidentHeroReportRepository {
 		}
 		return incidentReports;
 	}
+	
+    public Stack<String> findByHero(int idHero) {
+    	Stack<String> idsArray = new Stack<String>();
+		ResultSet result;
+		try {
+			Statement st = this.connection.createStatement();
+			result = st.executeQuery("SELECT * FROM incident_hero_report where idHero =" + idHero);
+			while (result.next()) {
+				idsArray.push(result.getString("idIncident"));
+			}
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return idsArray;
+    }
 }
+
+

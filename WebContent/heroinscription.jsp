@@ -18,6 +18,12 @@
 		    <label for="city" class="form-label">Nom</label>
 		    <input type="text" class="form-control" name="name" required>
 		  </div>
+		  
+		  	<div class="form-group">
+		    <label for="adress">Adresse</label>
+		    <input type="text" class="form-control" name="adress" required>
+  			</div>
+  			
 		  <div class="mb-3">
 		    <label for="latitude" class="form-label">Latitude</label>
 		    <input type="text" class="form-control" name="latitude" required>

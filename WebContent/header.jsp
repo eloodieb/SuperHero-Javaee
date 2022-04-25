@@ -25,9 +25,6 @@
   <li class="nav-item">
     <a class="nav-link" href="/superHero/heroinscription">S'inscrire comme super hero</a>
   </li>
-   <li class="nav-item">
-    <a class="nav-link" href="/superHero/resulthero">List hero</a>
-  </li>
 </ul>
 </nav>
 <header class="mb-4">

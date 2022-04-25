@@ -3,22 +3,22 @@ package entity;
 import java.util.List;
 
 public class Incident {
-	private Long id;
+	private int id;
 	private String city;
 	private Double longitude;
 	private Double latitude;
-	private Long id_type_incident;
+	private int id_type_incident;
 	public Incident() {}
-	public Incident(String city, Double longitude, Double latitude, Long id_type_incident) {
+	public Incident(String city, Double longitude, Double latitude, int id_type_incident) {
 		this.city = city;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.id_type_incident = id_type_incident;
 	}
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getCity() {
@@ -39,10 +39,10 @@ public class Incident {
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
-	public Long getId_type_incident() {
+	public int getId_type_incident() {
 		return id_type_incident;
 	}
-	public void setId_type_incident(Long id_type_incident) {
+	public void setId_type_incident(int id_type_incident) {
 		this.id_type_incident = id_type_incident;
 	}
 }
